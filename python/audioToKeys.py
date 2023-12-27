@@ -25,17 +25,17 @@ def record_audio(stop_event):
     return frames
 
 
-# def stream_until_seconds(stream, seconds):
-#     for _ in range(0, int(RATE / CHUNK * seconds + 1)):
-#         data = stream.read(CHUNK)
-#         yield data
-
 def stream_until_seconds(stream, seconds):
-    frames = []
-    for _ in range(0, int(RATE / CHUNK * seconds)):
+    for _ in range(0, int(RATE / CHUNK * seconds + 1)):
         data = stream.read(CHUNK)
-        frames.append(data)
-    return frames
+        yield data
+
+# def stream_until_seconds(stream, seconds):
+#     frames = []
+#     for _ in range(0, int(RATE / CHUNK * seconds)):
+#         data = stream.read(CHUNK)
+#         frames.append(data)
+#     return frames
 
 
 
