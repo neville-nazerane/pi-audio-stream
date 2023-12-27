@@ -1,3 +1,4 @@
+from calendar import c
 import pyaudio
 import requests
 import sys
@@ -53,7 +54,8 @@ with open("keywords.txt", "r") as file:
         input(line.strip())
         elapsed_time = time.time() - start_time
 
-        streamData = b''.join(stream_until_seconds(stream, elapsed_time))
+        print(f'gonna take {elapsed_time}')
+        streamData = b''.join(stream_until_seconds(stream, 2))
 
         stream.stop_stream()
         stream.close()
