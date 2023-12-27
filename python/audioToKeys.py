@@ -56,6 +56,8 @@ with open("keywords.txt", "r") as file:
 
         # print(f'gonna take {elapsed_time}')
         
+        print(line.strip())
+
         guid = str(uuid.uuid4()) 
         
         # save on server
