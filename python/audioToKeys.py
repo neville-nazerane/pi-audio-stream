@@ -55,12 +55,11 @@ with open("keywords.txt", "r") as file:
         elapsed_time = time.time() - start_time
 
         print(f'gonna take {elapsed_time}')
-        streamData = stream_until_seconds(stream, elapsed_time)
         
         guid = str(uuid.uuid4()) 
         
         # save on server
-        requests.post(f'{SERVER_URL}/audioToSpecificFile/{guid}', data=streamData)
+        requests.post(f'{SERVER_URL}/audioToSpecificFile/{guid}', data=stream_until_seconds(stream, elapsed_time))
         requests.post(f'{SERVER_URL}/completeFile/{guid}')
 
         stream.stop_stream()
