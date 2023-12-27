@@ -52,12 +52,13 @@ with open("keywords.txt", "r") as file:
 
         # talkedStream = record_audio(stop_event)  # Get the recorded data
 
+        data = keep_streaming(stream);
         stream.stop_stream()
         
         guid = str(uuid.uuid4()) 
         
         # save on server
-        requests.post(f'{SERVER_URL}/audioToSpecificFile/{guid}', data=keep_streaming(stream))
+        requests.post(f'{SERVER_URL}/audioToSpecificFile/{guid}', data=data)
         requests.post(f'{SERVER_URL}/completeFile/{guid}')
         
         stream.start_stream();
