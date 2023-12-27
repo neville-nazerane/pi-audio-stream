@@ -24,6 +24,11 @@ def record_audio(stop_event):
     return frames
 
 
+def keep_streaming(stream):
+    while True:
+        data = stream.read(CHUNK, exception_on_overflow=False)
+        yield data
+
 
 
 
@@ -36,7 +41,6 @@ stream = audio.open(format=FORMAT, channels=CHANNELS,
                     frames_per_buffer=CHUNK)
 with open("keywords.txt", "r") as file:
     for line in file:
-
         # stop_event = threading.Event()
         # recorder_thread = threading.Thread(target=record_audio, args=(stop_event,))
         # recorder_thread.start()        
@@ -48,12 +52,16 @@ with open("keywords.txt", "r") as file:
 
         # talkedStream = record_audio(stop_event)  # Get the recorded data
 
-
+        stream.stop_stream()
+        
         guid = str(uuid.uuid4()) 
         
         # save on server
-        requests.post(f'{SERVER_URL}/audioToSpecificFile/{guid}', data=stream)
+        requests.post(f'{SERVER_URL}/audioToSpecificFile/{guid}', data=keep_streaming(stream))
         requests.post(f'{SERVER_URL}/completeFile/{guid}')
+        
+        stream.start_stream();
+
 
 
 stream.stop_stream()
