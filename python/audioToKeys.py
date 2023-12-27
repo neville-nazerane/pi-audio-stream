@@ -26,7 +26,7 @@ def record_audio(stop_event):
     return frames
 
 
-def stream_until_seconds(stream, seconds):
+def stream_until_seconds(stream: pyaudio.Stream, seconds):
     for _ in range(0, int(RATE / CHUNK * seconds + 1)):
         data = stream.read(CHUNK)
         yield data
@@ -47,7 +47,6 @@ input("Hit enter to begin")
 
 with open("keywords.txt", "r") as file:
     for line in file:
-
         stream = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, frames_per_buffer=CHUNK)
         
         # start_time = time.time()
@@ -60,8 +59,10 @@ with open("keywords.txt", "r") as file:
 
         guid = str(uuid.uuid4()) 
         
+        heardData = stream_until_seconds(stream, 2)
+
         # save on server
-        requests.post(f'{SERVER_URL}/audioToSpecificFile/{guid}', data=stream_until_seconds(stream, 2))
+        requests.post(f'{SERVER_URL}/audioToSpecificFile/{guid}', data=heardData)
         requests.post(f'{SERVER_URL}/completeFile/{guid}')
 
         stream.stop_stream()
