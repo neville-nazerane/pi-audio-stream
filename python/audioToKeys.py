@@ -55,7 +55,7 @@ with open("keywords.txt", "r") as file:
         elapsed_time = time.time() - start_time
 
         print(f'gonna take {elapsed_time}')
-        streamData = b''.join(stream_until_seconds(stream, 2))
+        streamData = b''.join(stream_until_seconds(stream, 10))
 
         stream.stop_stream()
         stream.close()
