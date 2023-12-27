@@ -55,7 +55,8 @@ with open("keywords.txt", "r") as file:
                             channels=CHANNELS, 
                             rate=RATE, 
                             input=True, 
-                            frames_per_buffer=CHUNK)
+                            frames_per_buffer=CHUNK,
+                            stream_callback=stream_callback)
         
         # start_time = time.time()
         # input(line.strip())
