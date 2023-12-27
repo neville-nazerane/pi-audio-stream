@@ -50,16 +50,16 @@ with open("keywords.txt", "r") as file:
 
         stream = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, frames_per_buffer=CHUNK)
         
-        start_time = time.time()
-        input(line.strip())
-        elapsed_time = time.time() - start_time
+        # start_time = time.time()
+        # input(line.strip())
+        # elapsed_time = time.time() - start_time
 
-        print(f'gonna take {elapsed_time}')
+        # print(f'gonna take {elapsed_time}')
         
         guid = str(uuid.uuid4()) 
         
         # save on server
-        requests.post(f'{SERVER_URL}/audioToSpecificFile/{guid}', data=stream_until_seconds(stream, elapsed_time))
+        requests.post(f'{SERVER_URL}/audioToSpecificFile/{guid}', data=stream_until_seconds(stream, 2))
         requests.post(f'{SERVER_URL}/completeFile/{guid}')
 
         stream.stop_stream()
