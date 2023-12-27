@@ -1,0 +1,9 @@
+smarty turn on bedroom
+smarty turn off bedroom
+smarty turn bedroom
+smarty turn on front
+smarty turn off front
+smarty turn front
+smarty turn on kitchen
+smarty turn off kitchen
+smarty turn kitchen
