@@ -30,6 +30,9 @@ def stream_until_seconds(stream: pyaudio.Stream, seconds):
     for _ in range(0, int(RATE / CHUNK * seconds + 1)):
         data = stream.read(CHUNK)
         yield data
+        
+def stream_callback(in_data, frame_count, time_info, status):
+    return (in_data, pyaudio.paContinue)
 
 # def stream_until_seconds(stream, seconds):
 #     frames = []
@@ -47,7 +50,12 @@ input("Hit enter to begin")
 
 with open("keywords.txt", "r") as file:
     for line in file:
-        stream = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, frames_per_buffer=CHUNK)
+        stream = audio.open(format=FORMAT, 
+                            channels=CHANNELS, 
+                            rate=RATE, 
+                            input=True, 
+                            frames_per_buffer=CHUNK,
+                            stream_callback=stream_callback)
         
         # start_time = time.time()
         # input(line.strip())
