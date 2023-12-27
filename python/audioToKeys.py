@@ -53,7 +53,7 @@ with open("keywords.txt", "r") as file:
         input(line.strip())
         elapsed_time = time.time() - start_time
 
-        streamData = b''.join(stream_until_seconds(stream, elapsed_time + 1))
+        streamData = b''.join(stream_until_seconds(stream, elapsed_time))
 
         stream.stop_stream()
         stream.close()
