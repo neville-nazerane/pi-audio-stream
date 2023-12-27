@@ -50,6 +50,7 @@ input("Hit enter to begin")
 
 with open("keywords.txt", "r") as file:
     for line in file:
+        line = line.strip();
         stream = audio.open(format=FORMAT, 
                             channels=CHANNELS, 
                             rate=RATE, 
@@ -63,9 +64,9 @@ with open("keywords.txt", "r") as file:
 
         # print(f'gonna take {elapsed_time}')
         
-        print(line.strip())
+        print(line)
 
-        guid = str(uuid.uuid4()) 
+        guid = line.replace(' ', '_') # str(uuid.uuid4()) 
         
         heardData = stream_until_seconds(stream, 2)
 
