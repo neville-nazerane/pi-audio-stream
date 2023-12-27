@@ -51,7 +51,7 @@ with open("keywords.txt", "r") as file:
         stream = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, frames_per_buffer=CHUNK)
         
         # start_time = time.time()
-        # input(line.strip())
+        input(line.strip())
         # elapsed_time = time.time() - start_time
 
         # print(f'gonna take {elapsed_time}')
