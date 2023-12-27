@@ -3,6 +3,7 @@ import requests
 import sys
 import uuid
 import threading
+import time
 
 # Settings
 SERVER_URL = f"http://{sys.argv[1]}"
@@ -24,11 +25,17 @@ def record_audio(stop_event):
     return frames
 
 
-def keep_streaming(stream):
-    while True:
-        data = stream.read(CHUNK, exception_on_overflow=False)
-        yield data
+# def stream_until_seconds(stream, seconds):
+#     for _ in range(0, int(RATE / CHUNK * seconds + 1)):
+#         data = stream.read(CHUNK)
+#         yield data
 
+def stream_until_seconds(stream, seconds):
+    frames = []
+    for _ in range(0, int(RATE / CHUNK * seconds)):
+        data = stream.read(CHUNK)
+        frames.append(data)
+    return frames
 
 
 
@@ -36,33 +43,27 @@ audio = pyaudio.PyAudio()
 
 input("Hit enter to begin")
 
-stream = audio.open(format=FORMAT, channels=CHANNELS,
-                    rate=RATE, input=True,
-                    frames_per_buffer=CHUNK)
+
 with open("keywords.txt", "r") as file:
     for line in file:
-        # stop_event = threading.Event()
-        # recorder_thread = threading.Thread(target=record_audio, args=(stop_event,))
-        # recorder_thread.start()        
 
-        input(line.strip())
+        stream = audio.open(format=FORMAT, channels=CHANNELS, rate=RATE, input=True, frames_per_buffer=CHUNK)
         
-        # stop_event.set()  # Stop recording
-        # recorder_thread.join()  # Wait for the recording thread to finish
+        start_time = time.time()
+        input(line.strip())
+        elapsed_time = time.time() - start_time
 
-        # talkedStream = record_audio(stop_event)  # Get the recorded data
+        streamData = b''.join(stream_until_seconds(stream, elapsed_time))
 
-        data = keep_streaming(stream)
+        stream.stop_stream()
+        stream.close()
         
         guid = str(uuid.uuid4()) 
         
         # save on server
-        requests.post(f'{SERVER_URL}/audioToSpecificFile/{guid}', data=data)
+        requests.post(f'{SERVER_URL}/audioToSpecificFile/{guid}', data=streamData)
         requests.post(f'{SERVER_URL}/completeFile/{guid}')
 
 
-
-stream.stop_stream()
-stream.close()
 
 audio.terminate()
