@@ -37,24 +37,26 @@ stream = audio.open(format=FORMAT, channels=CHANNELS,
 with open("keywords.txt", "r") as file:
     for line in file:
 
-        stop_event = threading.Event()
-        recorder_thread = threading.Thread(target=record_audio, args=(stop_event,))
-        recorder_thread.start()        
+        # stop_event = threading.Event()
+        # recorder_thread = threading.Thread(target=record_audio, args=(stop_event,))
+        # recorder_thread.start()        
 
         input(line.strip())
         
-        stop_event.set()  # Stop recording
-        recorder_thread.join()  # Wait for the recording thread to finish
+        # stop_event.set()  # Stop recording
+        # recorder_thread.join()  # Wait for the recording thread to finish
 
-        talkedStream = record_audio(stop_event)  # Get the recorded data
-        
+        # talkedStream = record_audio(stop_event)  # Get the recorded data
+
+
         guid = str(uuid.uuid4()) 
         
         # save on server
-        requests.post(f'{SERVER_URL}/audioToSpecificFile/{guid}', data=talkedStream)
+        requests.post(f'{SERVER_URL}/audioToSpecificFile/{guid}', data=stream)
         requests.post(f'{SERVER_URL}/completeFile/{guid}')
 
 
 stream.stop_stream()
 stream.close()
+
 audio.terminate()
