@@ -65,7 +65,7 @@ with open("keywords.txt", "r") as file:
         
         print(line)
 
-        guid = line.replace(' ', '_') # str(uuid.uuid4()) 
+        guid = f"{str(uuid.uuid4())}__{line.replace(' ', '_')}"  # str(uuid.uuid4()) 
         
         heardData = stream_until_seconds(stream, 2)
 
