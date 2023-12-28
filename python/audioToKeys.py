@@ -29,7 +29,8 @@ input("Hit enter to begin")
 
 def show_me_the_money():
     for _ in range(60):
-        print(f"function 1 says {CURRENT_KEY}")
+        requests.get(f'{SERVER_URL}/showthis/{CURRENT_KEY}')
+        # print(f"function 1 says {CURRENT_KEY}")
         time.sleep(1)
 
 def keep_reading_file():
