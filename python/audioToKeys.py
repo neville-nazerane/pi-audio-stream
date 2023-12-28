@@ -8,6 +8,7 @@ import time
 
 # Settings
 SERVER_URL = f"http://{sys.argv[1]}"
+CURRENT_KEY = ''
 
 # Audio configuration
 FORMAT = pyaudio.paInt16
@@ -32,8 +33,8 @@ def keep_reading_file():
         for line in file:
             line = line.strip();
 
-            key = f"{str(uuid.uuid4())}__{line.replace(' ', '_')}"
-            print(key)
+            CURRENT_KEY = f"{str(uuid.uuid4())}__{line.replace(' ', '_')}"
+            print(CURRENT_KEY)
             input(line)
 
 
