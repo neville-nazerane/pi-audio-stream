@@ -85,7 +85,7 @@ with open("keywords.txt", "r") as file:
         seconds = 4
         
         if (len(items) > 1):
-            seconds = items[1]
+            seconds = int(items[1])
         
         print(key)
 
