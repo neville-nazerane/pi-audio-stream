@@ -55,7 +55,6 @@ with open("keywords.txt", "r") as file:
                             channels=CHANNELS, 
                             rate=RATE, 
                             input=True, 
-                            frames_per_buffer=CHUNK,
                             stream_callback=stream_callback)
         
         # start_time = time.time()
@@ -68,7 +67,7 @@ with open("keywords.txt", "r") as file:
 
         guid = f"{str(uuid.uuid4())}__{line.replace(' ', '_')}"  # str(uuid.uuid4()) 
         
-        heardData = stream_until_seconds(stream, 2)
+        heardData = stream_until_seconds(stream, 3)
 
         # save on server
         requests.post(f'{SERVER_URL}/audioToSpecificFile/{guid}', data=heardData)
