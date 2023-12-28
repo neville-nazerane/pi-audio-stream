@@ -36,7 +36,7 @@ def keep_reading_file():
     with open("keywords.txt", "r") as file:
         for line in file:
             line = line.strip();
-
+            global CURRENT_KEY
             CURRENT_KEY = f"{str(uuid.uuid4())}__{line.replace(' ', '_')}"
             input(line)
 
