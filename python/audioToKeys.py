@@ -49,13 +49,17 @@ def show_me_the_money():
 
 def keep_reading_file():
     global CURRENT_KEY
-    with open("keywords.txt", "r") as file:
-        for line in file:
-            line = line.strip();
-            curr = CURRENT_KEY = f"{str(uuid.uuid4())}__{line.replace(' ', '_')}"
-            input(line)
-            CURRENT_KEY = 'NADA'
-            requests.post(f'{SERVER_URL}/completeFile/{curr}')
+    while True:
+        with open("keywords.txt", "r") as file:
+            for line in file:
+                line = line.strip();
+                curr = CURRENT_KEY = f"{str(uuid.uuid4())}__{line.replace(' ', '_')}"
+                input(line)
+                CURRENT_KEY = 'NADA'
+                requests.post(f'{SERVER_URL}/completeFile/{curr}')
+            
+
+    CURRENT_KEY = 'DEAD'
 
 
 fileReadThread = threading.Thread(target=keep_reading_file)
