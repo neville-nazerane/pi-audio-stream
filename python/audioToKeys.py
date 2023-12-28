@@ -34,8 +34,10 @@ stream = audio.open(format=FORMAT,
                     frames_per_buffer=CHUNK)
 
 def readStream():
-    data = stream.read(CHUNK, exception_on_overflow=False)
-    yield data
+    key = CURRENT_KEY
+    while key == CURRENT_KEY: # make sure the key at the starting is still the key
+        data = stream.read(CHUNK, exception_on_overflow=False)
+        yield data
 
 def keep_streaming():
     while CURRENT_KEY != 'DEAD':
