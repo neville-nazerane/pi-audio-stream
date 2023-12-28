@@ -77,25 +77,26 @@ stream = audio.open(format=FORMAT,
 
 count = 0
 with open("keywords.txt", "r") as file:
-    print(f'Going for {++count}...')
-    for line in file:
-        items = line.strip().split(', ')
+    while True:
+        print(f'Going for {++count}...')
+        for line in file:
+            items = line.strip().split(', ')
         
-        key = items[0]
-        seconds = 4
+            key = items[0]
+            seconds = 4
         
-        if (len(items) > 1):
-            seconds = int(items[1])
+            if (len(items) > 1):
+                seconds = int(items[1])
         
-        print(key)
+            print(key)
 
-        guid = f"{str(uuid.uuid4())}__{key.replace(' ', '_')}"  # str(uuid.uuid4()) 
+            guid = f"{str(uuid.uuid4())}__{key.replace(' ', '_')}"  # str(uuid.uuid4()) 
         
-        # heardData = stream_until_seconds(stream, 3)
+            # heardData = stream_until_seconds(stream, 3)
 
-        # save on server
-        requests.post(f'{SERVER_URL}/audioToSpecificFile/{guid}', data=stream_until_seconds(seconds))
-        requests.post(f'{SERVER_URL}/completeFile/{guid}')
+            # save on server
+            requests.post(f'{SERVER_URL}/audioToSpecificFile/{guid}', data=stream_until_seconds(seconds))
+            requests.post(f'{SERVER_URL}/completeFile/{guid}')
 
 
 print('yah we done here')
