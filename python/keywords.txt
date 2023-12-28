@@ -1,9 +1,9 @@
-smarty turn on bedroom, 4
-smarty turn off bedroom, 4
+smarty turn on bedroom, 3
+smarty turn off bedroom, 3
 smarty bedroom, 3
-smarty turn on front, 4
-smarty turn off front, 4
+smarty turn on front, 3
+smarty turn off front, 3
 smarty front, 3
-smarty turn on kitchen, 4
-smarty turn off kitchen, 4
+smarty turn on kitchen, 3
+smarty turn off kitchen, 3
 smarty kitchen, 3
