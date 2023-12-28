@@ -32,11 +32,11 @@ stream = audio.open(format=FORMAT,
                     input=True, 
                     frames_per_buffer=CHUNK)
 
-# def readStream():
-#     key = CURRENT_KEY
-#     while key == CURRENT_KEY: # make sure the key at the starting is still the key
-#         data = stream.read(CHUNK, exception_on_overflow=False)
-#         yield data
+def readStream():
+    key = CURRENT_KEY
+    while key == CURRENT_KEY: # make sure the key at the starting is still the key
+        data = stream.read(CHUNK, exception_on_overflow=False)
+        yield data
 
 def keep_streaming():
     while CURRENT_KEY != 'DEAD':
@@ -44,12 +44,6 @@ def keep_streaming():
         if CURRENT_KEY != 'NADA': 
             requests.post(f'{SERVER_URL}/audioToSpecificFile/{CURRENT_KEY}', data=readStream())
         
-
-# def show_me_the_money():
-#     for _ in range(60):
-#         requests.get(f'{SERVER_URL}/showthis/{CURRENT_KEY}')
-#         # print(f"function 1 says {CURRENT_KEY}")
-#         time.sleep(1)
 
 def keep_reading_file():
     count = 0
