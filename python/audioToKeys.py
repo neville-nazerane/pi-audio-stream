@@ -75,7 +75,6 @@ stream = audio.open(format=FORMAT,
 # fileReadThread.join()
 # streamThread.join()
 
-print('yah we done here')
 
 with open("keywords.txt", "r") as file:
     for line in file:
@@ -85,7 +84,7 @@ with open("keywords.txt", "r") as file:
         key = items[0]
         seconds = 4
         
-        if (items.count() > 1):
+        if (len(items) > 1):
             seconds = items[1]
         
         print(key)
@@ -99,6 +98,7 @@ with open("keywords.txt", "r") as file:
         requests.post(f'{SERVER_URL}/completeFile/{guid}')
 
 
+print('yah we done here')
 
 stream.stop_stream()
 stream.close()
