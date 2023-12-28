@@ -35,7 +35,7 @@ def audio_stream_generator(stream):
 
 guid = str(uuid.uuid4())  
 
-for i in range(6 * 4):
+for i in range(3):
     try:
 
         response = requests.post(f'{SERVER_URL}/audioToSpecificFile/{guid}', data=audio_stream_generator(stream))
