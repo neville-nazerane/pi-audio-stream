@@ -76,9 +76,11 @@ stream = audio.open(format=FORMAT,
 # streamThread.join()
 
 count = 0
-with open("keywords.txt", "r") as file:
-    while True:
-        print(f'Going for {++count}...')
+
+while True:
+    count += 1
+    print(f'Going for {count}...')
+    with open("keywords.txt", "r") as file:
         for line in file:
             items = line.strip().split(', ')
         
