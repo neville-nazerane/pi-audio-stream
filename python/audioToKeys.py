@@ -27,6 +27,10 @@ audio = pyaudio.PyAudio()
 
 input("Hit enter to begin")
 
+def show_me_the_money():
+    for _ in range(60):
+        print(f"function 1 says {CURRENT_KEY}")
+        time.sleep(1)
 
 def keep_reading_file():
     with open("keywords.txt", "r") as file:
@@ -34,13 +38,19 @@ def keep_reading_file():
             line = line.strip();
 
             CURRENT_KEY = f"{str(uuid.uuid4())}__{line.replace(' ', '_')}"
-            print(CURRENT_KEY)
             input(line)
 
 
+fileReadThread = threading.Thread(target=keep_reading_file)
+showThread = threading.Thread(target=show_me_the_money)
 
-keep_reading_file();
+fileReadThread.start()
+showThread.start()
 
+fileReadThread.join()
+showThread.join()
+
+print('yah we done here')
 
 # with open("keywords.txt", "r") as file:
 #     for line in file:
