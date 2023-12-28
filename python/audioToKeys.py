@@ -36,8 +36,8 @@ stream = audio.open(format=FORMAT,
 
 def keep_streaming():
     while CURRENT_KEY != 'DEAD':
-        if CURRENT_KEY != 'NADA':
-            data = stream.read(CHUNK, exception_on_overflow=False)
+        data = stream.read(CHUNK, exception_on_overflow=False)
+        if CURRENT_KEY != 'NADA': 
             requests.post(f'{SERVER_URL}/audioToSpecificFile/{CURRENT_KEY}', data=data)
         
 
