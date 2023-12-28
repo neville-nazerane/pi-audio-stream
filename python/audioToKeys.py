@@ -27,6 +27,20 @@ audio = pyaudio.PyAudio()
 
 input("Hit enter to begin")
 
+stream = audio.open(format=FORMAT, 
+                    channels=CHANNELS, 
+                    rate=RATE, 
+                    input=True, 
+                    frames_per_buffer=CHUNK)
+
+
+def keep_streaming():
+    while CURRENT_KEY != 'DEAD':
+        if CURRENT_KEY != 'NADA':
+            data = stream.read(CHUNK, exception_on_overflow=False)
+            requests.post(f'{SERVER_URL}/audioToSpecificFile/{CURRENT_KEY}', data=data)
+        
+
 def show_me_the_money():
     for _ in range(60):
         requests.get(f'{SERVER_URL}/showthis/{CURRENT_KEY}')
@@ -38,18 +52,20 @@ def keep_reading_file():
     with open("keywords.txt", "r") as file:
         for line in file:
             line = line.strip();
-            CURRENT_KEY = f"{str(uuid.uuid4())}__{line.replace(' ', '_')}"
+            curr = CURRENT_KEY = f"{str(uuid.uuid4())}__{line.replace(' ', '_')}"
             input(line)
+            CURRENT_KEY = 'NADA'
+            requests.post(f'{SERVER_URL}/completeFile/{curr}')
 
 
 fileReadThread = threading.Thread(target=keep_reading_file)
-showThread = threading.Thread(target=show_me_the_money)
+streamThread = threading.Thread(target=keep_streaming)
 
 fileReadThread.start()
-showThread.start()
+streamThread.start()
 
 fileReadThread.join()
-showThread.join()
+streamThread.join()
 
 print('yah we done here')
 
@@ -85,4 +101,6 @@ print('yah we done here')
 #         stream.close()
 
 
+stream.stop_stream()
+stream.close()
 audio.terminate()
