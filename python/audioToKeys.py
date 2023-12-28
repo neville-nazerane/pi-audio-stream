@@ -8,7 +8,7 @@ import time
 
 # Settings
 SERVER_URL = f"http://{sys.argv[1]}"
-CURRENT_KEY = ''
+CURRENT_KEY = 'NADA'
 
 # Audio configuration
 FORMAT = pyaudio.paInt16
