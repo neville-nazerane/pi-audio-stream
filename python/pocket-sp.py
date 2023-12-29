@@ -5,8 +5,8 @@ from pocketsphinx import LiveSpeech, get_model_path
 model_path = get_model_path()
 
 # Define the list of keywords to detect
-keywords = ["batman", "smarty", "dyslexia"]  # Replace with your keywords
-keywords_str = " ".join([f"/{word}/" for word in keywords])
+keywords = [("batman", 20), ("smarty", 20), ("dyslexia", 20)]  # Update with your keywords and thresholds
+keywords_str = "\n".join([f"{word} /1e-{threshold}/" for word, threshold in keywords])
 
 # Configure speech recognition
 speech = LiveSpeech(
