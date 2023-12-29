@@ -19,7 +19,7 @@ speech = LiveSpeech(
     lm=False,
     dic=os.path.join(model_path, 'en-us/cmudict-en-us.dict'),
     kws_threshold=1e-20,
-    kws=keywords_str
+    kws='wakeupWords.txt'
 )
 
 # Process audio input and check for keywords
