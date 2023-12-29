@@ -62,40 +62,38 @@ def keep_reading_file():
     CURRENT_KEY = 'DEAD'
 
 
-fileReadThread = threading.Thread(target=keep_reading_file)
-streamThread = threading.Thread(target=keep_streaming)
+# fileReadThread = threading.Thread(target=keep_reading_file)
+# streamThread = threading.Thread(target=keep_streaming)
 
-fileReadThread.start()
-streamThread.start()
+# fileReadThread.start()
+# streamThread.start()
 
-fileReadThread.join()
-streamThread.join()
+# fileReadThread.join()
+# streamThread.join()
 
 
-# count = 0
+count = 0
 
-# while True:
-#     count += 1
-#     print(f'Going for {count}...')
-#     with open("keywords.txt", "r") as file:
-#         for line in file:
-#             items = line.strip().split(', ')
+while True:
+    count += 1
+    print(f'Going for {count}...')
+    with open("keywords.txt", "r") as file:
+        for line in file:
+            items = line.strip().split(', ')
         
-#             key = items[0]
-#             seconds = 4
+            key = items[0]
+            seconds = 4
         
-#             if (len(items) > 1):
-#                 seconds = int(items[1])
+            if (len(items) > 1):
+                seconds = int(items[1])
         
-#             print(key)
+            print(key)
 
-#             guid = f"{str(uuid.uuid4())}__{key.replace(' ', '_')}"  # str(uuid.uuid4()) 
+            guid = f"{str(uuid.uuid4())}__{key.replace(' ', '_')}"  # str(uuid.uuid4()) 
         
-#             # heardData = stream_until_seconds(stream, 3)
-
-#             # save on server
-#             requests.post(f'{SERVER_URL}/audioToSpecificFile/{guid}', data=stream_until_seconds(seconds))
-#             requests.post(f'{SERVER_URL}/completeFile/{guid}')
+            # save on server
+            requests.post(f'{SERVER_URL}/audioToSpecificFile/{guid}', data=stream_until_seconds(seconds))
+            requests.post(f'{SERVER_URL}/completeFile/{guid}')
 
 
 print('yah we done here')
