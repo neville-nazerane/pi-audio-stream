@@ -11,14 +11,14 @@ var configs = new ConfigurationBuilder()
 
 
 
-var speechConfig = SpeechConfig.FromSubscription(configs["key"],
+var speechConfig = SpeechTranslationConfig.FromSubscription(configs["key"],
                                                  configs["region"]);
-speechConfig.SpeechRecognitionLanguage = "en-US";
 
+
+speechConfig.SpeechRecognitionLanguage = "en-US";
+speechConfig.AddTargetLanguage("hi-IN");
 
 #endregion
-
-
 
 using var audioConfig = AudioConfig.FromDefaultMicrophoneInput();
 using var speechRecognizer = new SpeechRecognizer(speechConfig, audioConfig);
@@ -26,11 +26,12 @@ using var speechRecognizer = new SpeechRecognizer(speechConfig, audioConfig);
 
 while (true)
 {
-    Console.WriteLine("Speak now or forever hold your chickpeas");
+    Console.WriteLine("\n\n\n\n\n\n\n\nSpeak now or forever hold your chickpeas");
 
     var result = await speechRecognizer.RecognizeOnceAsync();
 
-    Console.WriteLine($"Time taken: {result.Duration.TotalSeconds}");
+    Console.WriteLine($"\n\n\nTime taken: {result.Duration.TotalSeconds}");
     Console.WriteLine($"Detected: {result.Text}");
     Console.WriteLine($"Reason: {result.Reason}");
+
 }
