@@ -17,7 +17,7 @@ speech = LiveSpeech(
     full_utt=False,
     hmm=os.path.join(model_path, 'en-us/en-us'),
     lm=False,
-    dic=os.path.join(model_path, 'cmudict-en-us.dict'),
+    dic=os.path.join(model_path, 'en-us/cmudict-en-us.dict'),
     kws_threshold=1e-20,
     kws=keywords_str
 )
