@@ -1,5 +1,7 @@
-﻿
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
+
+
+Console.WriteLine("Running");
 
 var configs = new ConfigurationBuilder()
                         .AddUserSecrets("pi azSpeech")
