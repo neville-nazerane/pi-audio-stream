@@ -11,8 +11,8 @@ keywords_str = "\n".join([f"{word} /1e-{threshold}/" for word, threshold in keyw
 # Configure speech recognition
 speech = LiveSpeech(
     verbose=False,
-    sampling_rate=16000,
-    buffer_size=2048,
+    sampling_rate=44100,
+    buffer_size=1024,
     no_search=False,
     full_utt=False,
     hmm=os.path.join(model_path, 'en-us/en-us'),
