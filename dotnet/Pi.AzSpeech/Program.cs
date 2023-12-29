@@ -1,2 +1,9 @@
-﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+﻿
+using Microsoft.Extensions.Configuration;
+
+var configs = new ConfigurationBuilder()
+                        .AddUserSecrets("pi azSpeech")
+                        .Build();
+
+
+Console.WriteLine($"Setting is {configs["test"]}");
