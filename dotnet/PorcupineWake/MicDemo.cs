@@ -132,146 +132,146 @@ namespace PorcupineWake
             }
         }
 
-        public static void Main(string[] args)
-        {
-            AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
-            if (args.Length == 0)
-            {
-                Console.WriteLine(HELP_STR);
-                _ = Console.Read();
-                return;
-            }
+        //public static void Main(string[] args)
+        //{
+        //    AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
+        //    if (args.Length == 0)
+        //    {
+        //        Console.WriteLine(HELP_STR);
+        //        _ = Console.Read();
+        //        return;
+        //    }
 
-            List<string> keywords = null;
-            List<string> keywordPaths = null;
-            List<float> sensitivities = null;
-            string accessKey = null;
-            string modelPath = null;
-            int audioDeviceIndex = -1;
-            string outputPath = null;
-            bool showAudioDevices = false;
-            bool showHelp = false;
+        //    List<string> keywords = null;
+        //    List<string> keywordPaths = null;
+        //    List<float> sensitivities = null;
+        //    string accessKey = null;
+        //    string modelPath = null;
+        //    int audioDeviceIndex = -1;
+        //    string outputPath = null;
+        //    bool showAudioDevices = false;
+        //    bool showHelp = false;
 
-            // parse command line arguments
-            int argIndex = 0;
-            while (argIndex < args.Length)
-            {
-                if (args[argIndex] == "--access_key")
-                {
-                    if (++argIndex < args.Length)
-                    {
-                        accessKey = args[argIndex++];
-                    }
-                }
-                else if (args[argIndex] == "--keywords")
-                {
-                    argIndex++;
-                    keywords = new List<string>();
-                    while (argIndex < args.Length && !args[argIndex].StartsWith("--"))
-                    {
-                        keywords.Add(args[argIndex++]);
-                    }
-                }
-                else if (args[argIndex] == "--keyword_paths")
-                {
-                    argIndex++;
-                    keywordPaths = new List<string>();
-                    while (argIndex < args.Length && !args[argIndex].StartsWith("--"))
-                    {
-                        keywordPaths.Add(args[argIndex++]);
-                    }
-                }
-                else if (args[argIndex] == "--model_path")
-                {
-                    if (++argIndex < args.Length)
-                    {
-                        modelPath = args[argIndex++];
-                    }
-                }
-                else if (args[argIndex] == "--sensitivities")
-                {
-                    argIndex++;
-                    sensitivities = new List<float>();
-                    while (argIndex < args.Length && !args[argIndex].StartsWith("--") &&
-                           float.TryParse(args[argIndex], out float sensitivity))
-                    {
-                        sensitivities.Add(sensitivity);
-                        argIndex++;
-                    }
-                }
-                else if (args[argIndex] == "--show_audio_devices")
-                {
-                    showAudioDevices = true;
-                    argIndex++;
-                }
-                else if (args[argIndex] == "--audio_device_index")
-                {
-                    if (++argIndex < args.Length && int.TryParse(args[argIndex], out int deviceIdx))
-                    {
-                        audioDeviceIndex = deviceIdx;
-                        argIndex++;
-                    }
-                }
-                else if (args[argIndex] == "--output_path")
-                {
-                    if (++argIndex < args.Length)
-                    {
-                        outputPath = args[argIndex++];
-                    }
-                }
-                else if (args[argIndex] == "-h" || args[argIndex] == "--help")
-                {
-                    showHelp = true;
-                    argIndex++;
-                }
-                else
-                {
-                    argIndex++;
-                }
-            }
+        //    // parse command line arguments
+        //    int argIndex = 0;
+        //    while (argIndex < args.Length)
+        //    {
+        //        if (args[argIndex] == "--access_key")
+        //        {
+        //            if (++argIndex < args.Length)
+        //            {
+        //                accessKey = args[argIndex++];
+        //            }
+        //        }
+        //        else if (args[argIndex] == "--keywords")
+        //        {
+        //            argIndex++;
+        //            keywords = new List<string>();
+        //            while (argIndex < args.Length && !args[argIndex].StartsWith("--"))
+        //            {
+        //                keywords.Add(args[argIndex++]);
+        //            }
+        //        }
+        //        else if (args[argIndex] == "--keyword_paths")
+        //        {
+        //            argIndex++;
+        //            keywordPaths = new List<string>();
+        //            while (argIndex < args.Length && !args[argIndex].StartsWith("--"))
+        //            {
+        //                keywordPaths.Add(args[argIndex++]);
+        //            }
+        //        }
+        //        else if (args[argIndex] == "--model_path")
+        //        {
+        //            if (++argIndex < args.Length)
+        //            {
+        //                modelPath = args[argIndex++];
+        //            }
+        //        }
+        //        else if (args[argIndex] == "--sensitivities")
+        //        {
+        //            argIndex++;
+        //            sensitivities = new List<float>();
+        //            while (argIndex < args.Length && !args[argIndex].StartsWith("--") &&
+        //                   float.TryParse(args[argIndex], out float sensitivity))
+        //            {
+        //                sensitivities.Add(sensitivity);
+        //                argIndex++;
+        //            }
+        //        }
+        //        else if (args[argIndex] == "--show_audio_devices")
+        //        {
+        //            showAudioDevices = true;
+        //            argIndex++;
+        //        }
+        //        else if (args[argIndex] == "--audio_device_index")
+        //        {
+        //            if (++argIndex < args.Length && int.TryParse(args[argIndex], out int deviceIdx))
+        //            {
+        //                audioDeviceIndex = deviceIdx;
+        //                argIndex++;
+        //            }
+        //        }
+        //        else if (args[argIndex] == "--output_path")
+        //        {
+        //            if (++argIndex < args.Length)
+        //            {
+        //                outputPath = args[argIndex++];
+        //            }
+        //        }
+        //        else if (args[argIndex] == "-h" || args[argIndex] == "--help")
+        //        {
+        //            showHelp = true;
+        //            argIndex++;
+        //        }
+        //        else
+        //        {
+        //            argIndex++;
+        //        }
+        //    }
 
-            // print help text and exit
-            if (showHelp)
-            {
-                Console.WriteLine(HELP_STR);
-                _ = Console.Read();
-                return;
-            }
+        //    // print help text and exit
+        //    if (showHelp)
+        //    {
+        //        Console.WriteLine(HELP_STR);
+        //        _ = Console.Read();
+        //        return;
+        //    }
 
-            // print audio device info and exit
-            if (showAudioDevices)
-            {
-                ShowAudioDevices();
-                _ = Console.Read();
-                return;
-            }
+        //    // print audio device info and exit
+        //    if (showAudioDevices)
+        //    {
+        //        ShowAudioDevices();
+        //        _ = Console.Read();
+        //        return;
+        //    }
 
 
-            if ((keywordPaths == null || keywordPaths.Count == 0) && (keywords == null || keywords.Count == 0))
-            {
-                throw new ArgumentException("Either '--keywords' or '--keyword_paths' must be set.");
-            }
+        //    if ((keywordPaths == null || keywordPaths.Count == 0) && (keywords == null || keywords.Count == 0))
+        //    {
+        //        throw new ArgumentException("Either '--keywords' or '--keyword_paths' must be set.");
+        //    }
 
-            if (keywords != null)
-            {
-                keywordPaths = new List<string>();
-                foreach (string k in keywords)
-                {
-                    if (!Enum.TryParse(typeof(BuiltInKeyword), k.ToUpper().Replace(" ", "_"), out object builtin))
-                    {
-                        throw new ArgumentException($"Keyword '{k}' is not a valid built-in keyword. Available built-ins are: " +
-                            $"{string.Join(",", Enum.GetNames(typeof(BuiltInKeyword)).Select(x => x.ToLower().Replace("_", " ")))}");
-                    }
-                    else
-                    {
-                        keywordPaths.Add(Porcupine.BUILT_IN_KEYWORD_PATHS[(BuiltInKeyword)builtin]);
-                    }
-                }
-            }
+        //    if (keywords != null)
+        //    {
+        //        keywordPaths = new List<string>();
+        //        foreach (string k in keywords)
+        //        {
+        //            if (!Enum.TryParse(typeof(BuiltInKeyword), k.ToUpper().Replace(" ", "_"), out object builtin))
+        //            {
+        //                throw new ArgumentException($"Keyword '{k}' is not a valid built-in keyword. Available built-ins are: " +
+        //                    $"{string.Join(",", Enum.GetNames(typeof(BuiltInKeyword)).Select(x => x.ToLower().Replace("_", " ")))}");
+        //            }
+        //            else
+        //            {
+        //                keywordPaths.Add(Porcupine.BUILT_IN_KEYWORD_PATHS[(BuiltInKeyword)builtin]);
+        //            }
+        //        }
+        //    }
 
-            // run demo with validated arguments
-            RunDemo(accessKey, modelPath, keywordPaths, sensitivities, audioDeviceIndex, outputPath);
-        }
+        //    // run demo with validated arguments
+        //    RunDemo(accessKey, modelPath, keywordPaths, sensitivities, audioDeviceIndex, outputPath);
+        //}
 
         private static void OnUnhandledException(object sender, UnhandledExceptionEventArgs e)
         {
