@@ -28,7 +28,9 @@ Console.WriteLine(File.Exists(modelPath) ? "Found the file" : "FILE NOT FOUND!!!
 
 using var keywordModel = KeywordRecognitionModel.FromFile(modelPath);
 
-using var audioConfig = AudioConfig.FromDefaultMicrophoneInput();
+using var audioConfig = string.IsNullOrEmpty(configs["file"]) ?
+                                AudioConfig.FromDefaultMicrophoneInput()
+                                : AudioConfig.FromWavFileInput(configs["file"]);
 
 using var keywordRecognizer = new KeywordRecognizer(audioConfig);
 
@@ -37,11 +39,11 @@ using var keywordRecognizer = new KeywordRecognizer(audioConfig);
 
 Console.WriteLine("SAY IT!");
 
-//while (true)
-//{
-//    await keywordRecognizer.RecognizeOnceAsync(keywordModel);
-//    Console.WriteLine("Oh hello there");
-//}
+while (true)
+{
+    await keywordRecognizer.RecognizeOnceAsync(keywordModel);
+    Console.WriteLine("Oh hello there");
+}
 
 //while (true)
 //{
