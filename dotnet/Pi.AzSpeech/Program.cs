@@ -29,6 +29,8 @@ Console.WriteLine(File.Exists(modelPath) ? "Found the file" : "FILE NOT FOUND!!!
 using var keywordModel = KeywordRecognitionModel.FromFile(modelPath);
 
 
+var httpClient = new HttpClient();
+
 Console.WriteLine("SAY IT!");
 
 using var audioConfig = AudioConfig.FromDefaultMicrophoneInput();
@@ -44,7 +46,7 @@ await Task.Delay(Timeout.Infinite);
 //await speechRecognizer.StartContinuousRecognitionAsync();
 
 
-static void SpeechRecognizer_Recognized(object? sender, SpeechRecognitionEventArgs e)
+async void SpeechRecognizer_Recognized(object? sender, SpeechRecognitionEventArgs e)
 {
     var result = e.Result;
     Console.WriteLine($"\n\n\nTime taken: {result.Duration.TotalSeconds}");
@@ -52,6 +54,11 @@ static void SpeechRecognizer_Recognized(object? sender, SpeechRecognitionEventAr
     Console.WriteLine($"Session Id: {e.SessionId}");
     Console.WriteLine($"Detected: {result.Text}");
     Console.WriteLine($"Reason: {result.Reason}");
+
+    if (result.Text.ToUpper().EndsWith("TURN OFF FRONT"))
+        await httpClient.PutAsync("http://192.168.1.155:5010/scene/FrontRoom/False", null);
+    else if (result.Text.ToUpper().EndsWith("TURN ON FRONT"))
+        await httpClient.PutAsync("http://192.168.1.155:5010/scene/FrontRoom/True", null);
 }
 
 
