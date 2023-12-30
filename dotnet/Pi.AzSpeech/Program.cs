@@ -34,11 +34,11 @@ using var keywordRecognizer = new KeywordRecognizer(audioConfig);
 
 Console.WriteLine("SAY IT!");
 
-//while (true)
-//{
-//    await keywordRecognizer.RecognizeOnceAsync(keywordModel);
-//    Console.WriteLine("Oh hello there");
-//}
+while (true)
+{
+    await keywordRecognizer.RecognizeOnceAsync(keywordModel);
+    Console.WriteLine("Oh hello there");
+}
 
 //while (true)
 //{
