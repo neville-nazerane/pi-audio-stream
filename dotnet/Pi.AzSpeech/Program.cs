@@ -24,8 +24,10 @@ var modelPath = Path.Combine(GetCurrentFolder(),
                              "keyword.table");
 
 using var keywordModel = KeywordRecognitionModel.FromFile(modelPath);
-using var audioConfig = AudioConfig.FromDefaultMicrophoneInput();
 
+AudioProcessingOptions.Create(AudioProcessingConstants.AUDIO_INPUT_PROCESSING_ENABLE_DEFAULT,
+                             PresetMicrophoneArrayGeometry.Custom);
+using var audioConfig = AudioConfig.FromDefaultMicrophoneInput();
 using var keywordRecognizer = new KeywordRecognizer(audioConfig);
 
 
