@@ -28,14 +28,8 @@ Console.WriteLine(File.Exists(modelPath) ? "Found the file" : "FILE NOT FOUND!!!
 
 using var keywordModel = KeywordRecognitionModel.FromFile(modelPath);
 
-using var audioConfig = string.IsNullOrEmpty(configs["file"]) ?
-                                AudioConfig.FromDefaultMicrophoneInput()
-                                : AudioConfig.FromWavFileInput(configs["file"]);
 
-using var keywordRecognizer = new KeywordRecognizer(audioConfig);
 
-using var audioConfig2 = AudioConfig.FromDefaultMicrophoneInput();
-using var speechRecognizer = new SpeechRecognizer(speechConfig, audioConfig2);
 
 Console.WriteLine("SAY IT!");
 
@@ -47,9 +41,13 @@ Console.WriteLine("SAY IT!");
 
 while (true)
 {
-    Console.WriteLine("\n\n\n\n\n\n\n\nSpeak now or forever hold your chickpeas");
 
-    await keywordRecognizer.RecognizeOnceAsync(keywordModel);
+    await WaitForKeywordAsync();
+
+    Console.WriteLine("now listening...");
+
+    using var audioConfig2 = AudioConfig.FromDefaultMicrophoneInput();
+    using var speechRecognizer = new SpeechRecognizer(speechConfig, audioConfig2);
     var result = await speechRecognizer.RecognizeOnceAsync();
 
     Console.WriteLine($"\n\n\nTime taken: {result.Duration.TotalSeconds}");
@@ -59,6 +57,12 @@ while (true)
 }
 
 
+Task WaitForKeywordAsync()
+{
+    using var audioConfig = AudioConfig.FromDefaultMicrophoneInput();
+    using var keywordRecognizer = new KeywordRecognizer(audioConfig);
+    return keywordRecognizer.RecognizeOnceAsync(keywordModel);
+}
 
 
 
