@@ -19,7 +19,7 @@ speechConfig.SpeechRecognitionLanguage = "en-US";
 
 #endregion
 
-//using var keywordModel = KeywordRecognitionModel.FromFile("ML_Models");
+using var keywordModel = KeywordRecognitionModel.FromFile("ML_Models");
 using var audioConfig = AudioConfig.FromDefaultMicrophoneInput();
 
 //using var keywordRecognizer = new KeywordRecognizer(audioConfig);
