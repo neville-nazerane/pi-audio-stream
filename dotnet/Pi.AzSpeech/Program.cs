@@ -1,6 +1,7 @@
 ﻿using Microsoft.CognitiveServices.Speech;
 using Microsoft.CognitiveServices.Speech.Audio;
 using Microsoft.Extensions.Configuration;
+using System.Diagnostics;
 using System.Reflection;
 
 #region Configs
@@ -42,11 +43,16 @@ Console.WriteLine("Alright.... listening now...");
 
 await Task.Delay(3000);
 
+var watch = new Stopwatch();
 Console.WriteLine("working");
+watch.Start();
 await speechRecognizer.StopKeywordRecognitionAsync();
+watch.Stop();
 Console.WriteLine("just once");
 var res = await speechRecognizer.RecognizeOnceAsync();
 Console.WriteLine(res.Text);
+
+Console.WriteLine("Reset for " + watch.ElapsedMilliseconds);
 await Task.Delay(Timeout.Infinite);
 
 //await speechRecognizer.StartContinuousRecognitionAsync();
