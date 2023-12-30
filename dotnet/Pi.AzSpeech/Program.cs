@@ -27,6 +27,7 @@ using var keywordRecognizer = new KeywordRecognizer(audioConfig);
 
 using var speechRecognizer = new SpeechRecognizer(speechConfig, audioConfig);
 
+Console.WriteLine("SAY IT!");
 
 while (true)
 {
