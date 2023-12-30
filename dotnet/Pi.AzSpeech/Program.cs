@@ -30,15 +30,16 @@ using var keywordModel = KeywordRecognitionModel.FromFile(modelPath);
 using var audioConfig = AudioConfig.FromDefaultMicrophoneInput();
 using var keywordRecognizer = new KeywordRecognizer(audioConfig);
 
-//using var speechRecognizer = new SpeechRecognizer(speechConfig, audioConfig);
+//using var audioConfig2 = AudioConfig.FromDefaultMicrophoneInput();
+//using var speechRecognizer = new SpeechRecognizer(speechConfig, audioConfig2);
 
 Console.WriteLine("SAY IT!");
 
-while (true)
-{
-    await keywordRecognizer.RecognizeOnceAsync(keywordModel);
-    Console.WriteLine("Oh hello there");
-}
+//while (true)
+//{
+//    await keywordRecognizer.RecognizeOnceAsync(keywordModel);
+//    Console.WriteLine("Oh hello there");
+//}
 
 //while (true)
 //{
