@@ -34,28 +34,29 @@ using var audioConfig = string.IsNullOrEmpty(configs["file"]) ?
 
 using var keywordRecognizer = new KeywordRecognizer(audioConfig);
 
-//using var audioConfig2 = AudioConfig.FromDefaultMicrophoneInput();
-//using var speechRecognizer = new SpeechRecognizer(speechConfig, audioConfig2);
+using var audioConfig2 = AudioConfig.FromDefaultMicrophoneInput();
+using var speechRecognizer = new SpeechRecognizer(speechConfig, audioConfig2);
 
 Console.WriteLine("SAY IT!");
 
-while (true)
-{
-    await keywordRecognizer.RecognizeOnceAsync(keywordModel);
-    Console.WriteLine("Oh hello there");
-}
-
 //while (true)
 //{
-//    Console.WriteLine("\n\n\n\n\n\n\n\nSpeak now or forever hold your chickpeas");
-
-//    var result = await speechRecognizer.RecognizeOnceAsync();
-
-//    Console.WriteLine($"\n\n\nTime taken: {result.Duration.TotalSeconds}");
-//    Console.WriteLine($"Detected: {result.Text}");
-//    Console.WriteLine($"Reason: {result.Reason}");
-
+//    await keywordRecognizer.RecognizeOnceAsync(keywordModel);
+//    Console.WriteLine("Oh hello there");
 //}
+
+while (true)
+{
+    Console.WriteLine("\n\n\n\n\n\n\n\nSpeak now or forever hold your chickpeas");
+
+    await keywordRecognizer.RecognizeOnceAsync(keywordModel);
+    var result = await speechRecognizer.RecognizeOnceAsync();
+
+    Console.WriteLine($"\n\n\nTime taken: {result.Duration.TotalSeconds}");
+    Console.WriteLine($"Detected: {result.Text}");
+    Console.WriteLine($"Reason: {result.Reason}");
+
+}
 
 
 
