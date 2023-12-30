@@ -28,7 +28,10 @@ Console.WriteLine(File.Exists(modelPath) ? "Found the file" : "FILE NOT FOUND!!!
 using var keywordModel = KeywordRecognitionModel.FromFile(modelPath);
 
 using var audioConfig = AudioConfig.FromDefaultMicrophoneInput();
-using var keywordRecognizer = new KeywordRecognizer(audioConfig);
+
+AudioConfig audioConfig2 = (audioConfig == null) ? AudioConfig.FromDefaultMicrophoneInput() : audioConfig;
+
+//using var keywordRecognizer = new KeywordRecognizer(audioConfig);
 
 //using var audioConfig2 = AudioConfig.FromDefaultMicrophoneInput();
 //using var speechRecognizer = new SpeechRecognizer(speechConfig, audioConfig2);
