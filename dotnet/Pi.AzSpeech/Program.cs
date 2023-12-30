@@ -1,6 +1,7 @@
 ﻿using Microsoft.CognitiveServices.Speech;
 using Microsoft.CognitiveServices.Speech.Audio;
 using Microsoft.Extensions.Configuration;
+using System.Reflection;
 
 #region Configs
 
@@ -29,9 +30,7 @@ using var keywordModel = KeywordRecognitionModel.FromFile(modelPath);
 
 using var audioConfig = AudioConfig.FromDefaultMicrophoneInput();
 
-AudioConfig audioConfig2 = (audioConfig == null) ? AudioConfig.FromDefaultMicrophoneInput() : audioConfig;
-
-//using var keywordRecognizer = new KeywordRecognizer(audioConfig);
+using var keywordRecognizer = new KeywordRecognizer(audioConfig);
 
 //using var audioConfig2 = AudioConfig.FromDefaultMicrophoneInput();
 //using var speechRecognizer = new SpeechRecognizer(speechConfig, audioConfig2);
