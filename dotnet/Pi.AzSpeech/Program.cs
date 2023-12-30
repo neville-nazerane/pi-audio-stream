@@ -33,6 +33,21 @@ using var keywordModel = KeywordRecognitionModel.FromFile(modelPath);
 
 Console.WriteLine("SAY IT!");
 
+
+using var audioConfig = AudioConfig.FromDefaultMicrophoneInput();
+using var speechRecognizer = new SpeechRecognizer(speechConfig, audioConfig);
+speechRecognizer.Recognized += SpeechRecognizer_Recognized;
+await speechRecognizer.StartKeywordRecognitionAsync(keywordModel);
+
+void SpeechRecognizer_Recognized(object? sender, SpeechRecognitionEventArgs e)
+{
+    var result = e.Result;
+    Console.WriteLine($"\n\n\nTime taken: {result.Duration.TotalSeconds}");
+    Console.WriteLine($"Detected: {result.Text}");
+    Console.WriteLine($"Reason: {result.Reason}");
+}
+
+
 //while (true) await WaitForKeywordAsync();
 
 //while (true)
@@ -42,32 +57,36 @@ Console.WriteLine("SAY IT!");
 //}
 
 
-using var audioConfig = AudioConfig.FromDefaultMicrophoneInput();
-while (true)
-{
+//using var audioConfig = AudioConfig.FromDefaultMicrophoneInput();
+//using var speechRecognizer = new SpeechRecognizer(speechConfig, audioConfig);
+//while (true)
+//{
 
-    await WaitForKeywordAsync();
-
-
-    //using var audioConfig2 = AudioConfig.FromDefaultMicrophoneInput();
-    using var speechRecognizer = new SpeechRecognizer(speechConfig, audioConfig);
-    var result = await speechRecognizer.RecognizeOnceAsync();
-
-    Console.WriteLine($"\n\n\nTime taken: {result.Duration.TotalSeconds}");
-    Console.WriteLine($"Detected: {result.Text}");
-    Console.WriteLine($"Reason: {result.Reason}");
-
-}
+//    //await WaitForKeywordAsync();
 
 
-async Task WaitForKeywordAsync()
-{
-    using var keywordRecognizer = new KeywordRecognizer(audioConfig);
-    await keywordRecognizer.RecognizeOnceAsync(keywordModel);
+//    //using var audioConfig2 = AudioConfig.FromDefaultMicrophoneInput();
+//    speechRecognizer.Recognized += SpeechRecognizer_Recognized;
+//    await speechRecognizer.StartKeywordRecognitionAsync(keywordModel);
 
-    Console.WriteLine("now listening...");
 
-}
+//    //Console.WriteLine($"\n\n\nTime taken: {result.Duration.TotalSeconds}");
+//    //Console.WriteLine($"Detected: {result.Text}");
+//    //Console.WriteLine($"Reason: {result.Reason}");
+
+//}
+
+
+
+
+//async Task WaitForKeywordAsync()
+//{
+//    using var keywordRecognizer = new KeywordRecognizer(audioConfig);
+//    await keywordRecognizer.RecognizeOnceAsync(keywordModel);
+
+//    Console.WriteLine("now listening...");
+
+//}
 
 
 
