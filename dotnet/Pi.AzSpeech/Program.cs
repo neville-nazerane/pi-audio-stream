@@ -33,7 +33,7 @@ using var keywordModel = KeywordRecognitionModel.FromFile(modelPath);
 
 Console.WriteLine("SAY IT!");
 
-while (true) await WaitForKeywordAsync();
+//while (true) await WaitForKeywordAsync();
 
 //while (true)
 //{
@@ -42,21 +42,21 @@ while (true) await WaitForKeywordAsync();
 //}
 
 
-//while (true)
-//{
+while (true)
+{
 
-//    await WaitForKeywordAsync();
+    await WaitForKeywordAsync();
 
 
-//    using var audioConfig2 = AudioConfig.FromDefaultMicrophoneInput();
-//    using var speechRecognizer = new SpeechRecognizer(speechConfig, audioConfig2);
-//    var result = await speechRecognizer.RecognizeOnceAsync();
+    using var audioConfig2 = AudioConfig.FromDefaultMicrophoneInput();
+    using var speechRecognizer = new SpeechRecognizer(speechConfig, audioConfig2);
+    var result = await speechRecognizer.RecognizeOnceAsync();
 
-//    Console.WriteLine($"\n\n\nTime taken: {result.Duration.TotalSeconds}");
-//    Console.WriteLine($"Detected: {result.Text}");
-//    Console.WriteLine($"Reason: {result.Reason}");
+    Console.WriteLine($"\n\n\nTime taken: {result.Duration.TotalSeconds}");
+    Console.WriteLine($"Detected: {result.Text}");
+    Console.WriteLine($"Reason: {result.Reason}");
 
-//}
+}
 
 
 async Task WaitForKeywordAsync()
