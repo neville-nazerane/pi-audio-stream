@@ -41,18 +41,18 @@ speechRecognizer.Recognized += SpeechRecognizer_Recognized;
 await speechRecognizer.StartKeywordRecognitionAsync(keywordModel);
 Console.WriteLine("Alright.... listening now...");
 
-await Task.Delay(3000);
+//await Task.Delay(3000);
 
-var watch = new Stopwatch();
-Console.WriteLine("working");
-watch.Start();
-await speechRecognizer.StopKeywordRecognitionAsync();
-watch.Stop();
-Console.WriteLine("just once");
-var res = await speechRecognizer.RecognizeOnceAsync();
-Console.WriteLine(res.Text);
+//var watch = new Stopwatch();
+//Console.WriteLine("working");
+//watch.Start();
+//await speechRecognizer.StopKeywordRecognitionAsync();
+//watch.Stop();
+//Console.WriteLine("just once");
+//var res = await speechRecognizer.RecognizeOnceAsync();
+//Console.WriteLine(res.Text);
 
-Console.WriteLine("Reset for " + watch.ElapsedMilliseconds);
+//Console.WriteLine("Reset for " + watch.ElapsedMilliseconds);
 await Task.Delay(Timeout.Infinite);
 
 //await speechRecognizer.StartContinuousRecognitionAsync();
