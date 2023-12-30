@@ -38,6 +38,8 @@ using var speechRecognizer = new SpeechRecognizer(speechConfig, audioConfig);
 speechRecognizer.Recognized += SpeechRecognizer_Recognized;
 await speechRecognizer.StartKeywordRecognitionAsync(keywordModel);
 
+await speechRecognizer.StartContinuousRecognitionAsync();
+
 Console.WriteLine("Alright.... listening now...");
 
 void SpeechRecognizer_Recognized(object? sender, SpeechRecognitionEventArgs e)
