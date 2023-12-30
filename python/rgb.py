@@ -2,6 +2,10 @@ import time
 from respeaker import PixelRing
 
 pixel_ring = PixelRing()  # Initialize the pixel ring
+print(dir(pixel_ring))
+
+exit()
+
 pixel_ring.set_brightness(10)  # Set brightness
 
 # Set the LEDs to red
