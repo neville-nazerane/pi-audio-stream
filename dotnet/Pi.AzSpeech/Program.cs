@@ -42,14 +42,15 @@ Console.WriteLine("SAY IT!");
 //}
 
 
+using var audioConfig = AudioConfig.FromDefaultMicrophoneInput();
 while (true)
 {
 
     await WaitForKeywordAsync();
 
 
-    using var audioConfig2 = AudioConfig.FromDefaultMicrophoneInput();
-    using var speechRecognizer = new SpeechRecognizer(speechConfig, audioConfig2);
+    //using var audioConfig2 = AudioConfig.FromDefaultMicrophoneInput();
+    using var speechRecognizer = new SpeechRecognizer(speechConfig, audioConfig);
     var result = await speechRecognizer.RecognizeOnceAsync();
 
     Console.WriteLine($"\n\n\nTime taken: {result.Duration.TotalSeconds}");
@@ -61,9 +62,9 @@ while (true)
 
 async Task WaitForKeywordAsync()
 {
-    using var audioConfig = AudioConfig.FromDefaultMicrophoneInput();
     using var keywordRecognizer = new KeywordRecognizer(audioConfig);
     await keywordRecognizer.RecognizeOnceAsync(keywordModel);
+
     Console.WriteLine("now listening...");
 
 }
