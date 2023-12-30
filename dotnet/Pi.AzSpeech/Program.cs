@@ -59,11 +59,11 @@ while (true) await WaitForKeywordAsync();
 //}
 
 
-Task WaitForKeywordAsync()
+async Task WaitForKeywordAsync()
 {
     using var audioConfig = AudioConfig.FromDefaultMicrophoneInput();
     using var keywordRecognizer = new KeywordRecognizer(audioConfig);
-    return keywordRecognizer.RecognizeOnceAsync(keywordModel);
+    await keywordRecognizer.RecognizeOnceAsync(keywordModel);
     Console.WriteLine("now listening...");
 
 }
