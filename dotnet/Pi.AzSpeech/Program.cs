@@ -29,13 +29,12 @@ Console.WriteLine(File.Exists(modelPath) ? "Found the file" : "FILE NOT FOUND!!!
 using var keywordModel = KeywordRecognitionModel.FromFile(modelPath);
 
 
-
-
 Console.WriteLine("SAY IT!");
 
 using var audioConfig = AudioConfig.FromDefaultMicrophoneInput();
 using var speechRecognizer = new SpeechRecognizer(speechConfig, audioConfig);
 speechRecognizer.Recognized += SpeechRecognizer_Recognized;
+
 await speechRecognizer.StartKeywordRecognitionAsync(keywordModel);
 
 Console.WriteLine("Alright.... listening now...");
@@ -45,10 +44,12 @@ await Task.Delay(Timeout.Infinite);
 //await speechRecognizer.StartContinuousRecognitionAsync();
 
 
-void SpeechRecognizer_Recognized(object? sender, SpeechRecognitionEventArgs e)
+static void SpeechRecognizer_Recognized(object? sender, SpeechRecognitionEventArgs e)
 {
     var result = e.Result;
     Console.WriteLine($"\n\n\nTime taken: {result.Duration.TotalSeconds}");
+    Console.WriteLine($"Id: {result.ResultId}");
+    Console.WriteLine($"Session Id: {e.SessionId}");
     Console.WriteLine($"Detected: {result.Text}");
     Console.WriteLine($"Reason: {result.Reason}");
 }
