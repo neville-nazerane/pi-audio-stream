@@ -40,7 +40,7 @@ await speechRecognizer.StartKeywordRecognitionAsync(keywordModel);
 
 Console.WriteLine("Alright.... listening now...");
 
-await Task.Delay(6000);
+await Task.Delay(Timeout.Infinite);
 
 //await speechRecognizer.StartContinuousRecognitionAsync();
 
