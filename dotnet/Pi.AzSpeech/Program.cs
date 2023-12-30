@@ -44,6 +44,7 @@ await Task.Delay(3000);
 
 await speechRecognizer.StopKeywordRecognitionAsync();
 var res = await speechRecognizer.RecognizeOnceAsync();
+Console.WriteLine("just once");
 Console.WriteLine(res.Text);
 await Task.Delay(Timeout.Infinite);
 
