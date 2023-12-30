@@ -38,9 +38,13 @@ using var speechRecognizer = new SpeechRecognizer(speechConfig, audioConfig);
 speechRecognizer.Recognized += SpeechRecognizer_Recognized;
 
 await speechRecognizer.StartKeywordRecognitionAsync(keywordModel);
-
 Console.WriteLine("Alright.... listening now...");
 
+await Task.Delay(3000);
+
+await speechRecognizer.StopKeywordRecognitionAsync();
+var res = await speechRecognizer.RecognizeOnceAsync();
+Console.WriteLine(res.Text);
 await Task.Delay(Timeout.Infinite);
 
 //await speechRecognizer.StartContinuousRecognitionAsync();
