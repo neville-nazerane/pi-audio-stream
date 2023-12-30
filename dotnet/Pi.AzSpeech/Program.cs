@@ -55,9 +55,9 @@ async void SpeechRecognizer_Recognized(object? sender, SpeechRecognitionEventArg
     Console.WriteLine($"Detected: {result.Text}");
     Console.WriteLine($"Reason: {result.Reason}");
 
-    if (result.Text.ToUpper().EndsWith("TURN OFF FRONT"))
+    if (result.Text.ToUpper().Contains("TURN OFF FRONT"))
         await httpClient.PutAsync("http://192.168.1.155:5010/scene/FrontRoom/False", null);
-    else if (result.Text.ToUpper().EndsWith("TURN ON FRONT"))
+    else if (result.Text.ToUpper().Contains("TURN ON FRONT"))
         await httpClient.PutAsync("http://192.168.1.155:5010/scene/FrontRoom/True", null);
 }
 
