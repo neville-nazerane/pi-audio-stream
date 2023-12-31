@@ -26,6 +26,7 @@ power.on()
 pixel_ring.set_brightness(50)
 
 pixel_ring.wakeup()
+time.sleep(3)
 
 exit()
 
