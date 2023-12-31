@@ -44,13 +44,13 @@ pixel_ring.set_brightness(50)
 #     pixel_ring.off()
 #     time.sleep(1)
 
-functions_list = inspect.getmembers(pixel_ring, inspect.isfunction)
+functions_list = inspect.getmembers(pixel_ring)
 
 print("Functions in pixel_ring:")
 for func in functions_list:
     print(func[0])
 
-functions_list = inspect.getmembers(power, inspect.isfunction)
+functions_list = inspect.getmembers(power)
 
 print("Functions in power:")
 for func in functions_list:
