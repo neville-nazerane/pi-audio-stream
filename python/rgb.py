@@ -17,11 +17,13 @@ import time
 
 from pixel_ring import pixel_ring
 from gpiozero import LED
+import inspect
+
 
 power = LED(5)
 power.on()
 
-pixel_ring.set_brightness(70)
+pixel_ring.set_brightness(50)
 
 # if __name__ == '__main__':
 #     while True:
@@ -42,6 +44,11 @@ pixel_ring.set_brightness(70)
 #     pixel_ring.off()
 #     time.sleep(1)
 
+functions_list = inspect.getmembers(pixel_ring, inspect.isfunction)
+
+print("Functions in pixel_ring:")
+for func in functions_list:
+    print(func[0])
 
 while True:
     input('LETS GO!')
