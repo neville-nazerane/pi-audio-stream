@@ -52,6 +52,16 @@ async void Recognizing(object? sender, SpeechRecognitionEventArgs e)
 await speechRecognizer.StartKeywordRecognitionAsync(keywordModel);
 Console.WriteLine("Alright.... listening now...");
 
+
+
+await Task.Delay(5000);
+
+await speechRecognizer.RecognizeOnceAsync();
+
+
+
+
+
 //await Task.Delay(3000);
 
 //var watch = new Stopwatch();
