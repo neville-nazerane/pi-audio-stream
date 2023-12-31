@@ -79,17 +79,17 @@ await Task.Delay(Timeout.Infinite);
 //await speechRecognizer.StartContinuousRecognitionAsync();
 
 
-async void SpeechRecognizer_Recognized(object? sender, SpeechRecognitionEventArgs e)
-{
-    var result = e.Result;
-    Console.WriteLine($"\n\n\nTime taken: {result.Duration.TotalSeconds}");
-    Console.WriteLine($"Id: {result.ResultId}");
-    Console.WriteLine($"Session Id: {e.SessionId}");
-    Console.WriteLine($"Detected: {result.Text}");
-    Console.WriteLine($"Reason: {result.Reason}");
+//async void SpeechRecognizer_Recognized(object? sender, SpeechRecognitionEventArgs e)
+//{
+//    var result = e.Result;
+//    Console.WriteLine($"\n\n\nTime taken: {result.Duration.TotalSeconds}");
+//    Console.WriteLine($"Id: {result.ResultId}");
+//    Console.WriteLine($"Session Id: {e.SessionId}");
+//    Console.WriteLine($"Detected: {result.Text}");
+//    Console.WriteLine($"Reason: {result.Reason}");
 
     
-}
+//}
 
 
 //while (true) await WaitForKeywordAsync();
