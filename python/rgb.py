@@ -50,6 +50,12 @@ print("Functions in pixel_ring:")
 for func in functions_list:
     print(func[0])
 
+functions_list = inspect.getmembers(power, inspect.isfunction)
+
+print("Functions in power:")
+for func in functions_list:
+    print(func[0])
+    
 while True:
     input('LETS GO!')
     pixel_ring.wakeup()
