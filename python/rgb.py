@@ -25,7 +25,7 @@ power.on()
 
 pixel_ring.set_brightness(50)
 
-power.blink()
+power.toggle()
 
 
 exit()
