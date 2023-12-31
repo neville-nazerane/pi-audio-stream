@@ -38,9 +38,15 @@ using var speechRecognizer = new SpeechRecognizer(speechConfig, audioConfig);
 speechRecognizer.Recognized += SpeechRecognizer_Recognized;
 speechRecognizer.Recognizing += Recognizing;
 
-void Recognizing(object? sender, SpeechRecognitionEventArgs e)
+async void Recognizing(object? sender, SpeechRecognitionEventArgs e)
 {
+    var result = e.Result;
     Console.WriteLine("Seeing... " + e.Result.Text);
+
+    if (result.Text.Contains("TURN OFF FRONT", StringComparison.CurrentCultureIgnoreCase))
+        await httpClient.PutAsync("http://192.168.1.155:5010/scene/FrontRoom/False", null);
+    else if (result.Text.Contains("TURN ON FRONT", StringComparison.CurrentCultureIgnoreCase))
+        await httpClient.PutAsync("http://192.168.1.155:5010/scene/FrontRoom/True", null);
 }
 
 await speechRecognizer.StartKeywordRecognitionAsync(keywordModel);
@@ -72,10 +78,7 @@ async void SpeechRecognizer_Recognized(object? sender, SpeechRecognitionEventArg
     Console.WriteLine($"Detected: {result.Text}");
     Console.WriteLine($"Reason: {result.Reason}");
 
-    if (result.Text.Contains("TURN OFF FRONT", StringComparison.CurrentCultureIgnoreCase))
-        await httpClient.PutAsync("http://192.168.1.155:5010/scene/FrontRoom/False", null);
-    else if (result.Text.Contains("TURN ON FRONT", StringComparison.CurrentCultureIgnoreCase))
-        await httpClient.PutAsync("http://192.168.1.155:5010/scene/FrontRoom/True", null);
+    
 }
 
 
