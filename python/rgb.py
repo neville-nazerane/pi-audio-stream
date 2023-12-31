@@ -45,7 +45,7 @@ pixel_ring.set_brightness(70)
 
 while True:
     input('LETS GO!')
-    pixel_ring.think()
+    pixel_ring.wakeup()
     time.sleep(3)
     pixel_ring.off()
 
