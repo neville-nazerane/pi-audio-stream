@@ -23,13 +23,14 @@ import inspect
 power = LED(5)
 power.on()
 
+pixel_ring.set_brightness(50)
+
 power.blink()
 
 
 exit()
 
 
-pixel_ring.set_brightness(50)
 
 # if __name__ == '__main__':
 #     while True:
