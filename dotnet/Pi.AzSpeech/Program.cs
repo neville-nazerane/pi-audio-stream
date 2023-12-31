@@ -41,7 +41,7 @@ speechRecognizer.Recognizing += Recognizing;
 async void Recognizing(object? sender, SpeechRecognitionEventArgs e)
 {
     var result = e.Result;
-    Console.WriteLine("Seeing... " + e.Result.Text);
+    Console.WriteLine($"{e.Result.Reason} Seeing...  {e.Result.Text}");
 
     if (result.Text.Contains("TURN OFF FRONT", StringComparison.CurrentCultureIgnoreCase))
         await httpClient.PutAsync("http://192.168.1.155:5010/scene/FrontRoom/False", null);
