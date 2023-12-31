@@ -18,7 +18,6 @@ var speechConfig = SpeechConfig.FromSubscription(configs["key"],
 
 
 speechConfig.SpeechRecognitionLanguage = "en-US";
-
 #endregion
 
 var modelPath = Path.Combine(GetCurrentFolder(),
@@ -37,6 +36,12 @@ Console.WriteLine("SAY IT!");
 using var audioConfig = AudioConfig.FromDefaultMicrophoneInput();
 using var speechRecognizer = new SpeechRecognizer(speechConfig, audioConfig);
 speechRecognizer.Recognized += SpeechRecognizer_Recognized;
+speechRecognizer.Recognizing += Recognizing;
+
+void Recognizing(object? sender, SpeechRecognitionEventArgs e)
+{
+    Console.WriteLine("Seeing... " + e.Result.Text);
+}
 
 await speechRecognizer.StartKeywordRecognitionAsync(keywordModel);
 Console.WriteLine("Alright.... listening now...");
