@@ -44,18 +44,22 @@ pixel_ring.set_brightness(50)
 #     pixel_ring.off()
 #     time.sleep(1)
 
+
 functions_list = inspect.getmembers(pixel_ring)
 
 print("Functions in pixel_ring:")
 for func in functions_list:
-    print(func[0])
+    if not func[0].startswith('_'):
+        print(func[0])
 
 functions_list = inspect.getmembers(power)
 
 print("Functions in power:")
 for func in functions_list:
-    print(func[0])
-    
+    if not func[0].startswith('_'):
+        print(func[0])
+        
+
 while True:
     input('LETS GO!')
     pixel_ring.wakeup()
