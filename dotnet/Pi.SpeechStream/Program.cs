@@ -13,6 +13,12 @@ Console.WriteLine("Saving...");
 await stream.CopyToAsync(ws);
 Console.WriteLine("Saved");
 
+await using var stream2 = CaptureAudioStream(15);
+await using var ws2 = File.OpenWrite("hello2.wav");
+
+Console.WriteLine("Another 1...");
+await stream2.CopyToAsync(ws2);
+
 
 static void ListAudioDevices()
 {
