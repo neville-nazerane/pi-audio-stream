@@ -68,7 +68,7 @@ async Task SendStreamToApiAsync(Stream incoming)
 {
     string fileName = Guid.NewGuid().ToString("N");
     await using var outgoing = new MemoryStream();
-    var request = new HttpRequestMessage(HttpMethod.Post, $"audioToSpecificFile/{fileName}")
+    var request = new HttpRequestMessage(HttpMethod.Post, $"simplyRecord/{fileName}")
     {
         Content = new StreamContent(incoming)
     };
@@ -89,7 +89,7 @@ async Task SendStreamToApiAsync(Stream incoming)
     }   
     await Console.Out.WriteLineAsync("Request sent");
 
-    await client.PostAsync($"completeFile/{fileName}", null);
+    //await client.PostAsync($"completeFile/{fileName}", null);
 
-    await Console.Out.WriteLineAsync("Completed");
+    //await Console.Out.WriteLineAsync("Completed");
 }
