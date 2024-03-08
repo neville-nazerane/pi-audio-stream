@@ -2,22 +2,19 @@
 using System.Diagnostics;
 
 
+
+var client = new HttpClient
+{
+    BaseAddress = new(args[0])
+};
+
+
+await using var stream = CaptureAudioStream();
+
+await SendStreamToApiAsync(stream);
+
 //ListAudioDevices();
 
-
-Console.WriteLine("Recording....");
-await using var stream = CaptureAudioStream(10);
-await using var ws = File.OpenWrite("hello.wav");
-
-Console.WriteLine("Saving...");
-await stream.CopyToAsync(ws);
-Console.WriteLine("Saved");
-
-await using var stream2 = CaptureAudioStream(15);
-await using var ws2 = File.OpenWrite("hello2.wav");
-
-Console.WriteLine("Another 1...");
-await stream2.CopyToAsync(ws2);
 
 
 static void ListAudioDevices()
@@ -49,7 +46,7 @@ static void ListAudioDevices()
 }
 
 
-Stream CaptureAudioStream(int durationSeconds)
+Stream CaptureAudioStream()
 {
     var psi = new ProcessStartInfo
     {
@@ -63,4 +60,20 @@ Stream CaptureAudioStream(int durationSeconds)
     var process = new Process { StartInfo = psi };
     process.Start();
     return process.StandardOutput.BaseStream;
+}
+
+
+
+async Task SendStreamToApiAsync(Stream incoming)
+{
+    await using var outgoing = new MemoryStream();
+    var request = new HttpRequestMessage(HttpMethod.Post, "audioToSpecificFile")
+    {
+        Content = new StreamContent(outgoing)
+    };
+    await Console.Out.WriteLineAsync("Copying stream...");
+    await incoming.CopyToAsync(outgoing);
+    await Console.Out.WriteLineAsync("Sending Stream");
+    await client.SendAsync(request);
+    await Console.Out.WriteLineAsync("Request sent");
 }
