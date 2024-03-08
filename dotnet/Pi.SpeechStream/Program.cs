@@ -69,10 +69,8 @@ async Task SendStreamToApiAsync(Stream incoming)
     await using var outgoing = new MemoryStream();
     var request = new HttpRequestMessage(HttpMethod.Post, "audioToSpecificFile")
     {
-        Content = new StreamContent(outgoing)
+        Content = new StreamContent(incoming)
     };
-    await Console.Out.WriteLineAsync("Copying stream...");
-    await incoming.CopyToAsync(outgoing);
     await Console.Out.WriteLineAsync("Sending Stream");
     await client.SendAsync(request);
     await Console.Out.WriteLineAsync("Request sent");
