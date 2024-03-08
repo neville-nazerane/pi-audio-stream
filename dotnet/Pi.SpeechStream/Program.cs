@@ -100,9 +100,9 @@ Stream CaptureAudioStream(int durationSeconds)
 
 async Task SendStreamToApiAsync(Stream incoming)
 {
-    string fileName = Guid.NewGuid().ToString("N");
-    await using var outgoing = new MemoryStream();
-    var request = new HttpRequestMessage(HttpMethod.Post, $"simplyRecord/{fileName}")
+    //string fileName = Guid.NewGuid().ToString("N");
+    //await using var outgoing = new MemoryStream();
+    var request = new HttpRequestMessage(HttpMethod.Post, $"stt")
     {
         Content = new StreamContent(incoming)
     };
