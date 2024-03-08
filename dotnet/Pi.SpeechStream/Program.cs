@@ -54,7 +54,7 @@ Stream CaptureAudioStream(int durationSeconds)
     var psi = new ProcessStartInfo
     {
         FileName = "arecord",
-        Arguments = $"-D plughw:1,0 -d {durationSeconds} -f S16_LE -t wav -r 16000 -c 1 -",
+        Arguments = $"-D plughw:1,0 -f S16_LE -t wav -r 16000 -c 1 -",
         UseShellExecute = false,
         RedirectStandardOutput = true,
         CreateNoWindow = true
@@ -62,5 +62,6 @@ Stream CaptureAudioStream(int durationSeconds)
 
     var process = new Process { StartInfo = psi };
     process.Start();
+    process.StandardOutput.Close();
     return process.StandardOutput.BaseStream;
 }
