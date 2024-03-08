@@ -78,6 +78,7 @@ async Task SendStreamToApiAsync(Stream incoming)
     // Read and write to the outgoing MemoryStream until the time limit is reached.
     while ((bytesRead = await incoming.ReadAsync(buffer, 0, buffer.Length)) > 0 && stopwatch.Elapsed < duration)
     {
+        Console.WriteLine(stopwatch.Elapsed);
         await outgoing.WriteAsync(buffer, 0, bytesRead);
     }
 
