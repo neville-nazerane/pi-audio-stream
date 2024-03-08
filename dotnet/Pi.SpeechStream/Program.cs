@@ -1,5 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using System.Diagnostics;
+using System.Threading.Channels;
 
 
 
@@ -9,7 +10,7 @@ var client = new HttpClient
 };
 
 
-await using var stream = CaptureAudioStream();
+await using var stream = CaptureAudioStream(20);
 
 await SendStreamToApiAsync(stream);
 
@@ -46,12 +47,12 @@ static void ListAudioDevices()
 }
 
 
-Stream CaptureAudioStream()
+Stream CaptureAudioStream(int durationSeconds)
 {
     var psi = new ProcessStartInfo
     {
         FileName = "arecord",
-        Arguments = $"-D plughw:1,0 -f S16_LE -t wav -r 16000 -c 1 -",
+        Arguments = $"-D plughw:1,0 -d {durationSeconds} -f S16_LE -t wav -r 16000 -c 1 -",
         UseShellExecute = false,
         RedirectStandardOutput = true,
         CreateNoWindow = true
@@ -63,67 +64,57 @@ Stream CaptureAudioStream()
 }
 
 
-async Task SendStreamToApiAsync(Stream incoming)
-{
-    string fileName = Guid.NewGuid().ToString("N");
-    var duration = TimeSpan.FromSeconds(10);
-
-    // Create a MemoryStream to accumulate data.
-    await using var outgoing = new MemoryStream();
-
-    var stopwatch = Stopwatch.StartNew();
-    byte[] buffer = new byte[4096]; // Buffer size can be adjusted based on expected data rates.
-    int bytesRead;
-
-    // Read and write to the outgoing MemoryStream until the time limit is reached.
-    while ((bytesRead = await incoming.ReadAsync(buffer, 0, buffer.Length)) > 0 && stopwatch.Elapsed < duration)
-    {
-        Console.WriteLine(stopwatch.Elapsed);
-        await outgoing.WriteAsync(buffer, 0, bytesRead);
-    }
-
-    // Rewind the outgoing MemoryStream to prepare for reading.
-    outgoing.Seek(0, SeekOrigin.Begin);
-
-    // Prepare the HttpRequestMessage with the content from the outgoing MemoryStream.
-    using var request = new HttpRequestMessage(HttpMethod.Post, $"simplyRecord/{fileName}")
-    {
-        Content = new StreamContent(outgoing)
-    };
-
-    await Console.Out.WriteLineAsync("Sending Stream");
-    await client.SendAsync(request);
-    await Console.Out.WriteLineAsync("Request sent");
-}
-
-
 //async Task SendStreamToApiAsync(Stream incoming)
 //{
 //    string fileName = Guid.NewGuid().ToString("N");
+//    var duration = TimeSpan.FromSeconds(10);
+
+//    // Create a MemoryStream to accumulate data.
 //    await using var outgoing = new MemoryStream();
-//    var request = new HttpRequestMessage(HttpMethod.Post, $"simplyRecord/{fileName}")
+
+//    var stopwatch = Stopwatch.StartNew();
+//    byte[] buffer = new byte[4096]; // Buffer size can be adjusted based on expected data rates.
+//    int bytesRead;
+
+//    // Read and write to the outgoing MemoryStream until the time limit is reached.
+//    while ((bytesRead = await incoming.ReadAsync(buffer, 0, buffer.Length)) > 0 && stopwatch.Elapsed < duration)
 //    {
-//        Content = new StreamContent(incoming)
+//        Console.WriteLine(stopwatch.Elapsed);
+//        await outgoing.WriteAsync(buffer, 0, bytesRead);
+//    }
+
+//    // Rewind the outgoing MemoryStream to prepare for reading.
+//    outgoing.Seek(0, SeekOrigin.Begin);
+
+//    // Prepare the HttpRequestMessage with the content from the outgoing MemoryStream.
+//    using var request = new HttpRequestMessage(HttpMethod.Post, $"simplyRecord/{fileName}")
+//    {
+//        Content = new StreamContent(outgoing)
 //    };
 
-//    var cancel = new CancellationTokenSource();
-//    cancel.CancelAfter(TimeSpan.FromSeconds(20));
-
 //    await Console.Out.WriteLineAsync("Sending Stream");
-//    try
-//    {
-//        await client.SendAsync(request, cancel.Token);
-
-//    }
-//    catch (Exception ex)
-//    {
-//        Console.WriteLine("Exception thrown for request");
-//        Console.WriteLine(ex);
-//    }   
+//    await client.SendAsync(request);
 //    await Console.Out.WriteLineAsync("Request sent");
-
-//    //await client.PostAsync($"completeFile/{fileName}", null);
-
-//    //await Console.Out.WriteLineAsync("Completed");
 //}
+
+
+async Task SendStreamToApiAsync(Stream incoming)
+{
+    string fileName = Guid.NewGuid().ToString("N");
+    await using var outgoing = new MemoryStream();
+    var request = new HttpRequestMessage(HttpMethod.Post, $"simplyRecord/{fileName}")
+    {
+        Content = new StreamContent(incoming)
+    };
+
+    await Console.Out.WriteLineAsync("Sending Request");
+
+    await client.SendAsync(request);
+
+    await Console.Out.WriteLineAsync("Send Request");
+
+    //await client.PostAsync($"completeFile/{fileName}", null);
+
+    //await Console.Out.WriteLineAsync("Completed");
+}
 
