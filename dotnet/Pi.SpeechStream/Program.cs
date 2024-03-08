@@ -66,12 +66,30 @@ Stream CaptureAudioStream()
 
 async Task SendStreamToApiAsync(Stream incoming)
 {
+    string fileName = Guid.NewGuid().ToString("N");
     await using var outgoing = new MemoryStream();
-    var request = new HttpRequestMessage(HttpMethod.Post, "audioToSpecificFile")
+    var request = new HttpRequestMessage(HttpMethod.Post, $"audioToSpecificFile/{fileName}")
     {
         Content = new StreamContent(incoming)
     };
+
+    var cancel = new CancellationTokenSource();
+    cancel.CancelAfter(TimeSpan.FromSeconds(20));
+
     await Console.Out.WriteLineAsync("Sending Stream");
-    await client.SendAsync(request);
+    try
+    {
+        await client.SendAsync(request, cancel.Token);
+
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("Exception thrown for request");
+        Console.WriteLine(ex);
+    }   
     await Console.Out.WriteLineAsync("Request sent");
+
+    await client.PostAsync($"completeFile/{fileName}", null);
+
+    await Console.Out.WriteLineAsync("Completed");
 }
