@@ -62,6 +62,5 @@ Stream CaptureAudioStream(int durationSeconds)
 
     var process = new Process { StartInfo = psi };
     process.Start();
-    process.StandardOutput.Close();
     return process.StandardOutput.BaseStream;
 }
