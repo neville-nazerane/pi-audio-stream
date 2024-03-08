@@ -5,11 +5,13 @@ using System.Diagnostics;
 //ListAudioDevices();
 
 
+Console.WriteLine("Recording....");
 await using var stream = CaptureAudioStream(10);
 await using var ws = File.OpenWrite("hello.wav");
 
+Console.WriteLine("Saving...");
 await stream.CopyToAsync(ws);
-
+Console.WriteLine("Saved");
 
 
 static void ListAudioDevices()
